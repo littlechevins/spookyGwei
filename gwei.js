@@ -1,34 +1,21 @@
 
-
-
-const { time } = require('console');
-const WebSocket = require('ws');
-
-
 let wsObj;
 let wsUrl = 'wss://www.gasnow.org/ws';
-var previous_time;
 let rapidObj = document.getElementById('rapid');
 let fastObj = document.getElementById('fast');
 let standardObj = document.getElementById('standard');
 let slowObj = document.getElementById('slow');
 
 let updatePageGasPriceData = (data) => {
+  // console.log(data.gasPrices);
+  let gweiDigits = 1000000000;
 
-    if (previous_time == NaN){
-        previous_time = Date.now();
-    } else {
-        var diff = Date.now() - previous_time;
-        console.log(`seconds elapsed = ${Math.floor(diff / 1000)}`);
-        previous_time = Date.now();
-    }
-  console.log(data.gasPrices);
-//   if (data && data.gasPrices) {
-//     rapidObj.innerHTML = data.gasPrices.rapid;
-//     fastObj.innerHTML = data.gasPrices.fast;
-//     standardObj.innerHTML = data.gasPrices.standard;
-//     slowObj.innerHTML = data.gasPrices.slow;
-//   }
+  if (data && data.gasPrices) {
+    rapidObj.innerHTML = Math.floor(data.gasPrices.rapid / gweiDigits);
+    fastObj.innerHTML = Math.floor(data.gasPrices.fast / gweiDigits);
+    standardObj.innerHTML = Math.floor(data.gasPrices.standard / gweiDigits);
+    slowObj.innerHTML = Math.floor(data.gasPrices.slow / gweiDigits);
+  }
 };
 
 wsObj = new WebSocket(wsUrl);

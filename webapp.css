@@ -1,0 +1,7 @@
+section div {
+    height: 40px;
+  }
+  section span {
+    display: inline-block;
+    width: 100px;
+  }
